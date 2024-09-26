@@ -35,7 +35,7 @@ class ChirpController extends Controller
         //validates the incoming request data
         $validated = $request->validate([
          // Ensure 'message' is required, is a string, and has a max length of 255 characters
-            'message'=> 'required|string|max"255'
+            'message'=> 'required|string|max:255',
         ]);
          
 
