@@ -15,8 +15,15 @@ class ChirpController extends Controller
      */
      public function index(): View
     {
+       //returns the 'chirps.index' view and pass the 'chirps' data to it
+       return view('chirps.index', [
 
-        return view('chirps.index');
+         // Fetch all chirps from the database, including the related 'user' data for each chirp
+        // 'with' performs eager loading to load related 'user' models to avoid the "N+1" problem
+        // 'latest' ensures chirps are sorted by the most recent ones first-descending order
+        // 'get()' retrieves all the chirps that match the query
+        'chirps' => Chirp::with('user')->latest()->get()
+       ]);
     }
 
     /**
