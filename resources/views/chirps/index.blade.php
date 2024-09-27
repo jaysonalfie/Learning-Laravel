@@ -36,7 +36,31 @@
                                 <span class="text-gray-800">{{ $chirp->user->name }}</span>
                                 <!-- Display the time when the chirp was created, formatted as "Day Month Year, Hour:Minute AM/PM" -->
                                 <small class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
+                                <!-- Check if the chirp was edited (i.e., updated_at is different from created_at) -->
+                                @unless ($chirp->created_at->eq($chirp->updated_at))
+                                <!-- Display 'edited' if the chirp was updated -->
+                                <small class="text-sm text-gray-600"> &middot; {{__('edited')}}</small>
+                                @endunless
                             </div>
+                             <!-- Check if the current user is the author of the chirp -->
+                            @if ($chirp->user->is(auth()->user()))
+                            <!-- If true, render a dropdown menu for editing the chirp -->
+                             <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            </svg>
+                                    </button>
+                                </x-slot>
+                                <x-slot name="content">
+                                     <!-- Render the 'Edit' link, directing to the chirp edit route -->
+                                    <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                        {{__('Edit')}}
+                                    </x-dropdown-link>
+                                </x-slot>
+                             </x-dropdown>
+                            @endif
                         </div>
                            <!-- Display the actual message content of the chirp -->
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>

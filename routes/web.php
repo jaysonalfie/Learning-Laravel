@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 
 //index is for displaying chirps and store is for creating new chirps
 Route::resource('chirps', ChirpController::class)
-      ->only(['index','store'])
+      ->only(['index','store','edit', 'update'])
       ->middleware(['auth','verified']);
 
 require __DIR__.'/auth.php';
