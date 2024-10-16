@@ -103,8 +103,17 @@ class ChirpController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chirp $chirp)
+    public function destroy(Chirp $chirp):RedirectResponse
     {
-        //
+        //authorize the user to delete the chirp
+
+        Gate::authorize('delete', $chirp);
+        
+
+        //Delete the chirp from the DB
+        $chirp->delete();
+
+        //Redirect to the chirps index route
+        return redirect(route('chirps.index'));
     }
 }

@@ -58,11 +58,23 @@
                                     <x-dropdown-link :href="route('chirps.edit', $chirp)">
                                         {{__('Edit')}}
                                     </x-dropdown-link>
+                                    <form method="POST" action="{{ route('chirps.destroy', $chirp)}}">
+                                        @csrf
+                                        <!-- Method override to specify the request as a DELETE (since HTML forms don't support DELETE natively) -->
+                                        @method('delete')
+                                        <!-- Creates a dropdown link to delete the chirp -->
+                                        <!-- Prevents the default behavior of the link (which would navigate to the URL) -->
+                                        <!-- Instead, it triggers the form submission to delete the chirp -->
+                                        <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();" >
+                                            {{__('Delete')}}
+                                        </x-dropdown-link>
+
+                                    </form>
                                 </x-slot>
                              </x-dropdown>
                             @endif
                         </div>
-                           <!-- Display the actual message content of the chirp -->
+                           <!-- Display the actual message content of the chirp that has been made-->
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                     </div>
                 </div>

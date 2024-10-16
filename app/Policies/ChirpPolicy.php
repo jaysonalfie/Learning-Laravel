@@ -47,7 +47,9 @@ class ChirpPolicy
      */
     public function delete(User $user, Chirp $chirp): bool
     {
-        //
+        //returns true if the user wjo created the chirp is the sama one and has roights to delete it
+
+        return $this->update($user, $chirp);
     }
 
     /**

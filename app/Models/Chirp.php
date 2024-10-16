@@ -22,7 +22,7 @@ class Chirp extends Model
 
         //The chirp belongs to the User
         //Chirps table has a 'user_id' column
-        //this is the foreign key pointingbto the id column in the 'users' table
+        //this is the foreign key pointing to the id column in the 'users' table
         return $this->belongsTo(User::class);
     }
 }
